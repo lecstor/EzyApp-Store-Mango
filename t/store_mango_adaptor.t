@@ -4,12 +4,9 @@ use Test::More;
 
 use Mango::BSON ':bson';
 use Mango;
-# use Mojo::IOLoop;
 
 use Data::Dumper 'Dumper';
 use Try;
-
-# use Carp::Always;
 
 use_ok 'EzyApp::Store::Mango::Adaptor';
 
@@ -26,14 +23,6 @@ ok $adap, 'new adaptor';
 
 my $model = EzyApp::Store::Mango::Model->new;
 ok $model, 'empty model';
-
-# $model->store($adap);
-# $model->update(sub {
-#     my ($err, $model_ref) = @_;
-#     is $err->{id}, 'not-found', 'not found error';
-#     Mojo::IOLoop->stop;
-# });
-# Mojo::IOLoop->start;
 
 $model = EzyApp::Store::Mango::Model->new(54321);
 ok $model, 'new with id only';
