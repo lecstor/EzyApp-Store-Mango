@@ -1,5 +1,6 @@
 
-all: testcover cover
+test:
+	carton exec prove -lv t/*
 
 testcover:
 	HARNESS_PERL_SWITCHES=-MDevel::Cover=+ignore,local,+ignore,home,+ignore,t/.*\.t carton exec prove -lv t/*
@@ -7,7 +8,6 @@ testcover:
 cover:
 	carton exec cover
 
-test:
-	carton exec prove -lv t/*
+tc: testcover cover
 
-.PHONY: all testcover cover test
+.PHONY: test testcover cover tc
