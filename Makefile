@@ -1,4 +1,7 @@
 
+install:
+	carton install
+
 test:
 	carton exec prove -lv t/*
 
