@@ -99,27 +99,52 @@ sub id{
 
 get a property value
 
-    $model->get('email');
+  $model->get('firstname');
+  $model->get('email.name');
+  $model->get('email.address');
 
 =cut
 
 sub get{
   my ($self, $property_name) = @_;
-  $self->record->{$property_name};
+  $self->_get($self->record, $property_name);
+}
+
+sub _get{
+  my ($self, $hash, $property_name) = @_;
+  my ($attr, $path) = $property_name =~ /^([^.]+)\.?(.*)/;
+  my $data = $hash->{$attr};
+  return $self->_get($data, $path) if $path;
+  return $data;
 }
 
 =item set
 
 set a property value
 
-    $model->set('email', 'picard@enterprise.com');
+  $model->set('email', 'picard@enterprise.com');
+  $model->set('email.name', 'Jean Picard');
+  $model->set('email.address', 'picard@enterprise.com');
 
 =cut
 
 sub set{
   my ($self, $property_name, $value) = @_;
   $self->clear_view_attributes; # in case we're adding a new property
-  $self->record->{$property_name} = $value;
+  my $record = $self->record;
+  $self->_set($record, $property_name, $value);
+  $self->record($record);
+}
+
+sub _set{
+  my ($self, $hash, $property_name, $value) = @_;
+  my ($attr, $path) = $property_name =~ /^([^.]+)\.?(.*)/;
+  if ($path){
+    # hash.attr must be a hash
+    $hash->{$attr} = {} unless exists $hash->{$attr} && ref $hash->{$attr} eq 'HASH';
+    return $self->_set($hash->{$attr}, $path, $value);
+  }
+  return $hash->{$attr} = $value;
 }
 
 =item view
