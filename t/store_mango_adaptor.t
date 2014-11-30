@@ -13,18 +13,18 @@ use Try;
 
 use_ok 'EzyApp::Store::Mango::Adaptor';
 
-use_ok 'EzyApp::Test::Model::User';
+use_ok 'EzyApp::Store::Mango::Model';
 
 my $mango = Mango->new('mongodb://127.0.0.1/ezyapp_test');
-my $users = $mango->db->collection('users');
+my $models = $mango->db->collection('models');
 
-try{ $users->drop() };
+try{ $models->drop() };
 
 
-my $adap = EzyApp::Store::Mango::Adaptor->new( collection => $users );
+my $adap = EzyApp::Store::Mango::Adaptor->new( collection => $models );
 ok $adap, 'new adaptor';
 
-my $model = EzyApp::Test::Model::User->new;
+my $model = EzyApp::Store::Mango::Model->new;
 ok $model, 'empty model';
 
 # $model->store($adap);
@@ -35,44 +35,44 @@ ok $model, 'empty model';
 # });
 # Mojo::IOLoop->start;
 
-$model = EzyApp::Test::Model::User->new(54321);
+$model = EzyApp::Store::Mango::Model->new(54321);
 ok $model, 'new with id only';
 ok $model->id, 'model id';
 
-$model = EzyApp::Test::Model::User->new( store => $adap );
+$model = EzyApp::Store::Mango::Model->new( store => $adap );
 ok $model, 'new model with hash no record';
 
-$model = EzyApp::Test::Model::User->new(
+$model = EzyApp::Store::Mango::Model->new(
     store => $adap,
     record => { name => 'Fred' },
 );
 ok $model, 'new model with hash no id';
 
-$model = EzyApp::Test::Model::User->new({
+$model = EzyApp::Store::Mango::Model->new({
     store => $adap,
     record => { name => 'Fred' },
 });
 ok $model, 'new model with hashref no id';
 
-$model = EzyApp::Test::Model::User->new(
+$model = EzyApp::Store::Mango::Model->new(
     store => $adap,
     record => { id => 7654321, name => 'Fred' },
 );
 ok $model, 'new model with id (not _id) in hash';
 
-$model = EzyApp::Test::Model::User->new({
+$model = EzyApp::Store::Mango::Model->new({
     store => $adap,
     record => { id => 7654321, name => 'Fred' },
 });
 ok $model, 'new model with id (not _id) in hashref';
 
-$model = EzyApp::Test::Model::User->new({
+$model = EzyApp::Store::Mango::Model->new({
     store => $adap,
     record => { _id => 7654321, name => 'Fred' },
 });
 ok $model, 'new model with _id in hashref';
 
-$model = EzyApp::Test::Model::User->new({
+$model = EzyApp::Store::Mango::Model->new({
     store => $adap,
     record => { id => 7654321, name => 'Fred', 'email' => 'fred@rubblerock.com'  },
 });
@@ -87,7 +87,19 @@ delete $record{email};
 is_deeply $model->view([qw!name!]), \%record, 'custom view';
 
 
-$model = EzyApp::Test::Model::User->new(
+$model->set('hash.key', 'hello');
+is $model->get('hash.key'), 'hello', 'set/get path';
+is $model->record->{hash}{key}, 'hello', 'set/get path';
+
+$model->set('email.name', 'Jean Picard');
+$model->set('email.address', 'picard@enterprise.com');
+is $model->get('email.name'), 'Jean Picard', 'set/get path';
+is $model->get('email.address'), 'picard@enterprise.com', 'set/get path';
+is $model->record->{email}{name}, 'Jean Picard', 'set/get path';
+is $model->record->{email}{address}, 'picard@enterprise.com', 'set/get path';
+
+
+$model = EzyApp::Store::Mango::Model->new(
     store => $adap,
     record => { name => 'Fred' },
 );
@@ -97,7 +109,7 @@ $model->save(sub{
     ok $model->id, 'model id';
     is $model->get('name'), 'Fred', 'model name';
 
-    my $model_clone = EzyApp::Test::Model::User->new(
+    my $model_clone = EzyApp::Store::Mango::Model->new(
         store => $adap,
         record => { _id => $model->id }
     );
@@ -119,7 +131,7 @@ $model->save(sub{
                 $model->id($id);
                 is $model->id, $id, 'set id';
 
-                my $model_dodgy = EzyApp::Test::Model::User->new(
+                my $model_dodgy = EzyApp::Store::Mango::Model->new(
                     store => $adap,
                     record => { _id => 'nah!' }
                 );
@@ -131,7 +143,7 @@ $model->save(sub{
                         my ($err, $model_what) = @_;
                         is $err, 'Invalid object id: "nah!"', 'Invalid object';
 
-                        $model_dodgy = EzyApp::Test::Model::User->new(
+                        $model_dodgy = EzyApp::Store::Mango::Model->new(
                             store => $adap,
                             record => { _id => bson_oid() }
                         );
