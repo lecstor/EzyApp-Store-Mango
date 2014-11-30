@@ -3,13 +3,13 @@ use Moose;
 use Mango::BSON ':bson';
 
 use EzyApp::Store::Mango::Adaptor;
+use EzyApp::Store::Mango::Model;
 
 =header EzyApp::Store::Mango::Collection
 
   $models = EzyApp::Store::Mango::Collection->new(
-    database => $mongodb,
-    name => 'users',
-    class => 'EzyApp::model::Users'
+    collection => $mango_collection,
+    class => 'EzyApp::Model::User'
   );
 
   $doc = $models->get($doc_id);
@@ -18,7 +18,7 @@ use EzyApp::Store::Mango::Adaptor;
 =cut
 
 has collection => ( is => 'ro' );
-has model_class => ( is => 'ro', isa => 'Str' );
+has class => ( is => 'ro', isa => 'Str', default => 'EzyApp::Store::Mango::Model' );
 
 has adaptor => (
   is => 'ro', lazy => 1,
