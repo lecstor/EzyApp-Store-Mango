@@ -2,6 +2,10 @@ package EzyApp::Store::Mango;
 use Moose;
 use EzyApp::Store::Mango::Collection;
 
+use EzyApp::Model::User;
+use EzyApp::Model::Account;
+use EzyApp::Model::APIKey;
+
 =header EzyApp::Model
 
 provides methods to controllers to get the work done.
@@ -11,10 +15,11 @@ provides methods to controllers to get the work done.
 has database => ( is => 'ro' );
 
 has users => (
-  is => 'ro', isa => 'EzyApp::Models', lazy => 1,
+  is => 'ro', isa => 'EzyApp::Store::Mango::Collection', lazy => 1,
   default => sub{
     EzyApp::Store::Mango::Collection->new(
-      collection => shift->database->collection('users')
+      collection => shift->database->collection('users'),
+      class => 'EzyApp::Model::User',
     )
   }
 );
@@ -23,7 +28,8 @@ has accounts => (
   is => 'ro', isa => 'EzyApp::Store::Mango::Collection', lazy => 1,
   default => sub{
     EzyApp::Store::Mango::Collection->new(
-      collection => shift->database->collection('accounts')
+      collection => shift->database->collection('accounts'),
+      class => 'EzyApp::Model::Account',
     )
   }
 );
@@ -32,7 +38,8 @@ has apikeys => (
   is => 'ro', isa => 'EzyApp::Store::Mango::Collection', lazy => 1,
   default => sub{
     EzyApp::Store::Mango::Collection->new(
-      collection => shift->database->collection('apikeys')
+      collection => shift->database->collection('apikeys'),
+      class => 'EzyApp::Model::APIKey',
     )
   }
 );
