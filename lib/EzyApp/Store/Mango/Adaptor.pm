@@ -83,6 +83,7 @@ sub save{
   foreach my $property_name (keys %$values){
     $model->set($property_name, $values->{$property_name});
   }
+  
   $self->collection->save($model->serialize_storage, sub{
     my ($coll, $err, $oid) = @_;
     $model->set('_id', $oid);
