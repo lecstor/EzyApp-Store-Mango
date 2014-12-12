@@ -59,6 +59,89 @@ sub create{
 #     });
 # }
 
+=item get_min_id
+
+return the lowest id for a site
+
+  $id = $store->get_min_id($site_id);
+  $store->get_min_id($site_id, $callback);
+
+=cut
+
+sub get_min_id{
+  my ($self, $site_id, $callback) = @_;
+  return $self->_get_id($site_id, { 'site_id' => $site_id }, '$min', $callback);
+}
+
+=item get_max_id
+
+return the highest id for a site
+
+  $id = $store->get_max_id($site_id);
+  $store->get_max_id($site_id, $callback);
+
+=cut
+
+sub get_max_id{
+  my ($self, $site_id, $callback) = @_;
+  return $self->_get_id($site_id, { 'site_id' => $site_id }, '$max', $callback);
+}
+
+sub _get_id{
+  my ($self, $match, $op, $callback) = @_;
+  if ($callback){
+    $self->collection->aggregate(
+      [
+          { '$match' => $match },
+          { '$group' => { _id => 0, id => { $op => '$id' } } }
+      ],
+      sub {
+        my ($collection, $err, $cursor) = @_;
+        my $result = $cursor->next if $cursor;
+        $callback->($err, $result ? $result->{id} : undef);
+      }
+    );
+  } else {
+    my $results = $self->collection->aggregate(
+        [
+            { '$match' => $match },
+            { '$group' => { _id => 0, id => { $op => '$id' } } }
+        ]
+    );
+    #print Dumper($result);
+    my $result = $results->next if $results;
+    return $result->{id} if $result;
+    return    
+  }
+}
+
+# sub _get_id{
+#   my ($self, $site_id, $op, $callback) = @_;
+#   if ($callback){
+#     $self->collection->aggregate(
+#       [
+#           { '$match' => { 'site_id' => $site_id } },
+#           { '$group' => { _id => 0, id => { $op => '$id' } } }
+#       ],
+#       sub {
+#         my ($collection, $err, $cursor) = @_;
+#         my $result = $cursor->next if $cursor;
+#         $callback->($err, $result ? $result->{id} : undef);
+#       }
+#     );
+#   } else {
+#     my $results = $self->collection->aggregate(
+#         [
+#             { '$match' => { 'site_id' => $site_id } },
+#             { '$group' => { _id => 0, id => { $op => '$id' } } }
+#         ]
+#     );
+#     #print Dumper($result);
+#     my $result = $results->next if $results;
+#     return $result->{id} if $result;
+#     return    
+#   }
+# }
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
