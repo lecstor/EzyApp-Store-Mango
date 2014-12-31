@@ -2,6 +2,8 @@ package EzyApp::Store::Mango::ModelBase;
 use Moose;
 use Mango::BSON ':bson';
 
+use Clone;
+
 =header EzyApp::Store::Mango::ModelBase
 
 Base for models using L<EzyApp::Store::Mango>
@@ -48,9 +50,11 @@ Alternatively..
 Create a model instance with changes for updating.
 
     $model_class->new(
+      record => {
         id => 43215,
         name => 'Spock',
         email => 'spock@enterprise.com',
+      }
     );
 
     $model_class->new();
@@ -179,7 +183,7 @@ By default this method returns a copy of the model document.
 =cut
 
 sub serialize_storage{
-  return \%{shift->record};
+  return {%{shift->record}};
 }
 
 =item update
@@ -226,17 +230,49 @@ sub save{
 
 =item fetch
 
-  $callback = sub{ my ($err, $model) = @_; }
-
 Refresh the model's record from the store.
 
+  $model->fetch;
+
+  $callback = sub{ my ($err, $model) = @_; }
+
   $model->fetch($callback);
+
 
 =cut
 
 sub fetch{
   my $self = shift;
   $self->store->fetch($self, @_);
+}
+
+=item remove
+
+Delete the model from the store
+
+  $model->remove;
+
+  $callback = sub{ my ($err, $model) = @_; }
+
+  $model->remove($callback);
+
+=cut
+
+sub remove{
+  my $self = shift;
+  $self->store->remove($self->id, @_);
+}
+
+=item clone
+
+=cut
+
+sub clone{
+  my $self = shift;
+  my $record = Clone::clone($self->record);
+  delete $record->{_id};
+  my $class = ref $self;
+  $class->new( record => $record, store => $self->store );
 }
 
 no Moose;
