@@ -1,3 +1,4 @@
+requires 'Clone';
 requires 'Mango';
 requires 'Moose';
 requires 'Try';
