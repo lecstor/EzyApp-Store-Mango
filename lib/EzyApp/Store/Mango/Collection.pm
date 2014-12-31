@@ -29,23 +29,48 @@ has adaptor => (
 );
 
 
-sub get{
-  my ($self, $id, $callback) = @_;
-  $id = { _id => $id } if ref $id ne 'HASH';
-  $self->collection->find_one( $id, sub{
-    my ($coll, $err, $doc) = @_;
-    $doc = $self->create($doc) if $doc;
-    $callback->($err, $doc);
-  });
-}
-
 sub create{
   my ($self, $doc) = @_;
   my $class = $self->class;
   # my %args = ( collection => $self->collection );
   my %args = ( store => $self->adaptor );
   $args{record} = $doc if $doc;
-  return $class->new(%args);
+  $class->new(%args);
+}
+
+
+sub get{
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self, $id) = @_;
+  $id = { _id => $id } if ref $id ne 'HASH';
+  if ($callback){
+    $self->collection->find_one( $id, sub{
+      my ($coll, $err, $doc) = @_;
+      $doc = $self->create($doc) if $doc;
+      $callback->($err, $doc);
+    });
+  } else {
+    my $doc = $self->collection->find_one($id);
+    $doc = $self->create($doc) if $doc;
+  }
+}
+
+sub find{
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self, $criteria, $projection, $sort) = @_;
+  if ($callback){
+    my $cursor = $self->collection->find( $criteria, $projection );
+    $cursor = $cursor->sort($sort) if $sort;
+    $cursor->all(sub{
+      my ($ursor, $err, $docs) = @_;
+      $docs = [map { $self->create($_) } @$docs];
+      $callback->($err, $docs);
+    });
+  } else {
+    my $cursor = $self->collection->find( $criteria, $projection );
+    $cursor = $cursor->sort($sort) if $sort;
+    [map { $self->create($_) } @{$cursor->all}];
+  }
 }
 
 # sub update{
@@ -111,7 +136,7 @@ sub _get_id{
     #print Dumper($result);
     my $result = $results->next if $results;
     return $result->{id} if $result;
-    return    
+    return
   }
 }
 
@@ -139,7 +164,7 @@ sub _get_id{
 #     #print Dumper($result);
 #     my $result = $results->next if $results;
 #     return $result->{id} if $result;
-#     return    
+#     return
 #   }
 # }
 
