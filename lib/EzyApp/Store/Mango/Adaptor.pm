@@ -35,7 +35,7 @@ overwriting other properties.
 =cut
 
 sub update{
-  my $cb = pop;
+  my $callback = pop if ref $_[-1] eq 'CODE';
   my ($self, $model, $values) = @_;
 
   $values ||= {};
@@ -48,23 +48,35 @@ sub update{
   my $_id;
   try{ $_id = bson_oid $model->id };
 
-  return $cb->('Invalid object id: "'.$model->id.'"') unless $_id;
+  if ($callback){
+    return $callback->('Invalid object id: "'.$model->id.'"') unless $_id;
 
-  $self->collection->find_and_modify({
-    query => { _id => $_id },
-    update => { '$set' => $model->serialize_storage }, # atomic update
-    new => bson_true, # return the modified doc
-    # upsert => bson_true, # create doc if none found
-  }, sub{
-    my $coll = shift;
-    my ($err, $doc) = @_;
-    return $cb->({ id => 'not-found', model => $model }) unless $doc;
-    return $cb->($err) if $err;
+    $self->collection->find_and_modify({
+      query => { _id => $_id },
+      update => { '$set' => $model->serialize_storage }, # atomic update
+      new => bson_true, # return the modified doc
+      # upsert => bson_true, # create doc if none found
+    }, sub{
+      my $coll = shift;
+      my ($err, $doc) = @_;
+      return $callback->({ id => 'not-found', model => $model }) unless $doc;
+      return $callback->($err) if $err;
 
-    $model->record($doc);
+      $model->record($doc);
 
-    $cb->($err, $model);
-  });
+      $callback->($err, $model);
+    });
+  } else {
+    die 'Invalid object id: "'.$model->id.'"' unless $_id;
+
+    return $self->collection->find_and_modify({
+      query => { _id => $_id },
+      update => { '$set' => $model->serialize_storage }, # atomic update
+      new => bson_true, # return the modified doc
+      # upsert => bson_true, # create doc if none found
+    });
+  }
+
 }
 
 =item save
@@ -77,17 +89,24 @@ Sets the stored record to the models value.
 =cut
 
 sub save{
-  my $cb = pop;
-  my ($self, $model, $values) = @_;
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self,$model,$values) = @_;
+
   $values ||= {};
   foreach my $property_name (keys %$values){
     $model->set($property_name, $values->{$property_name});
   }
-  
+
+  unless ($callback){
+    my $oid = $self->collection->save($model->serialize_storage);
+    $model->set('_id', $oid);
+    return $model;
+  }
+
   $self->collection->save($model->serialize_storage, sub{
     my ($coll, $err, $oid) = @_;
     $model->set('_id', $oid);
-    $cb->($err, $model);
+    $callback->($err, $model);
   });
 }
 
@@ -98,15 +117,36 @@ refresh the object from the database
 =cut
 
 sub fetch{
-  my ($self, $model, $callback) = @_;
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self, $model) = @_;
   my $id = { _id => $model->id };
-  $self->collection->find_one( $id, sub{
-    my ($coll, $err, $doc) = @_;
+  if ($callback){
+    $self->collection->find_one( $id, sub{
+      my ($coll, $err, $doc) = @_;
+      $model->record($doc) if $doc;
+      $callback->($err, $doc ? $model : undef);
+    });
+  } else {
+    my $doc = $self->collection->find_one($id);
     $model->record($doc) if $doc;
-    $callback->($err, $doc ? $model : undef);
-  });
+    return $model;
+  }
 }
 
+=item remove
+
+=cut
+
+sub remove{
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self, $query, $single) = @_;
+  $query = { _id => $query } unless ref $query;
+  if ($callback){
+    $self->collection->remove( $query, $single ? { single => 1 } : undef, $callback );
+  } else {
+    return $self->collection->remove( $query, $single ? { single => 1 } : undef );
+  }
+}
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
