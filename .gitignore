@@ -1,2 +1,5 @@
 cover_db/
 local/
+blib/
+inc/
+pm_to_blib

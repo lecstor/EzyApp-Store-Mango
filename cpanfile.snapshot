@@ -13,6 +13,59 @@ DISTRIBUTIONS
       Module::Runtime 0.012
       Sub::Exporter::Progressive 0.001006
       Variable::Magic 0.48
+  CGI-4.13
+    pathname: L/LE/LEEJO/CGI-4.13.tar.gz
+    provides:
+      CGI 4.13
+      CGI::Carp 4.13
+      CGI::Cookie 4.13
+      CGI::File::Temp 4.13
+      CGI::Pretty 4.13
+      CGI::Push 4.13
+      CGI::Util 4.13
+      Fh 4.13
+      MultipartBuffer 4.13
+    requirements:
+      Carp 0
+      Config 0
+      Encode 0
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      File::Spec 0.82
+      File::Temp 0
+      HTML::Entities 3.69
+      base 0
+      constant 0
+      if 0
+      overload 0
+      parent 0.225
+      perl 5.008001
+      strict 0
+      utf8 0
+      warnings 0
+  CPAN-Meta-2.143240
+    pathname: D/DA/DAGOLDEN/CPAN-Meta-2.143240.tar.gz
+    provides:
+      CPAN::Meta 2.143240
+      CPAN::Meta::Converter 2.143240
+      CPAN::Meta::Feature 2.143240
+      CPAN::Meta::History 2.143240
+      CPAN::Meta::Merge 2.143240
+      CPAN::Meta::Prereqs 2.143240
+      CPAN::Meta::Spec 2.143240
+      CPAN::Meta::Validator 2.143240
+    requirements:
+      CPAN::Meta::Requirements 2.121
+      CPAN::Meta::YAML 0.008
+      Carp 0
+      ExtUtils::MakeMaker 6.17
+      JSON::PP 2.27200
+      Parse::CPAN::Meta 1.4414
+      Scalar::Util 0
+      perl 5.008
+      strict 0
+      version 0.88
+      warnings 0
   Class-Load-0.22
     pathname: E/ET/ETHER/Class-Load-0.22.tar.gz
     provides:
@@ -63,6 +116,18 @@ DISTRIBUTIONS
       Sub::Install 0.921
       strict 0
       warnings 0
+  Data-Visitor-0.30
+    pathname: D/DO/DOY/Data-Visitor-0.30.tar.gz
+    provides:
+      Data::Visitor 0.30
+      Data::Visitor::Callback 0.30
+    requirements:
+      Class::Load 0.06
+      ExtUtils::MakeMaker 6.30
+      Moose 0.89
+      Task::Weaken 0
+      Tie::ToObject 0.01
+      namespace::clean 0.19
   Devel-CallChecker-0.006
     pathname: Z/ZE/ZEFRAM/Devel-CallChecker-0.006.tar.gz
     provides:
@@ -210,6 +275,7 @@ DISTRIBUTIONS
   DynaLoader-Functions-0.002
     pathname: Z/ZE/ZEFRAM/DynaLoader-Functions-0.002.tar.gz
     provides:
+      DynaLoader 0.002
       DynaLoader::Functions 0.002
     requirements:
       Carp 0
@@ -273,14 +339,49 @@ DISTRIBUTIONS
       File::Spec 0
       strict 0
       warnings 0
-  IO-Socket-IP-0.32
-    pathname: P/PE/PEVANS/IO-Socket-IP-0.32.tar.gz
+  File-Remove-1.52
+    pathname: A/AD/ADAMK/File-Remove-1.52.tar.gz
     provides:
-      IO::Socket::IP 0.32
+      File::Remove 1.52
     requirements:
-      IO::Socket 0
-      Socket 1.97
-      Test::More 0.88
+      Cwd 3.29
+      ExtUtils::MakeMaker 6.36
+      File::Spec 3.29
+      Test::More 0.42
+      perl 5.00503
+  HTML-Parser-3.71
+    pathname: G/GA/GAAS/HTML-Parser-3.71.tar.gz
+    provides:
+      HTML::Entities 3.69
+      HTML::Filter 3.57
+      HTML::HeadParser 3.71
+      HTML::LinkExtor 3.69
+      HTML::Parser 3.71
+      HTML::PullParser 3.57
+      HTML::TokeParser 3.69
+    requirements:
+      ExtUtils::MakeMaker 0
+      HTML::Tagset 3
+      XSLoader 0
+      perl 5.008
+  HTML-Tagset-3.20
+    pathname: P/PE/PETDANCE/HTML-Tagset-3.20.tar.gz
+    provides:
+      HTML::Tagset 3.20
+    requirements:
+      ExtUtils::MakeMaker 0
+  Hash-Util-FieldHash-Compat-0.08
+    pathname: E/ET/ETHER/Hash-Util-FieldHash-Compat-0.08.tar.gz
+    provides:
+      Hash::Util::FieldHash::Compat 0.08
+      Hash::Util::FieldHash::Compat::Heavy 0.08
+    requirements:
+      Exporter 0
+      ExtUtils::MakeMaker 6.30
+      constant 0
+      parent 0
+      strict 0
+      warnings 0
   List-MoreUtils-0.33
     pathname: A/AD/ADAMK/List-MoreUtils-0.33.tar.gz
     provides:
@@ -323,6 +424,58 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       Mojolicious 5.40
+  Module-Build-0.4210
+    pathname: L/LE/LEONT/Module-Build-0.4210.tar.gz
+    provides:
+      Module::Build 0.4210
+      Module::Build::Base 0.4210
+      Module::Build::Compat 0.4210
+      Module::Build::Config 0.4210
+      Module::Build::Cookbook 0.4210
+      Module::Build::Dumper 0.4210
+      Module::Build::Notes 0.4210
+      Module::Build::PPMMaker 0.4210
+      Module::Build::Platform::Default 0.4210
+      Module::Build::Platform::MacOS 0.4210
+      Module::Build::Platform::Unix 0.4210
+      Module::Build::Platform::VMS 0.4210
+      Module::Build::Platform::VOS 0.4210
+      Module::Build::Platform::Windows 0.4210
+      Module::Build::Platform::aix 0.4210
+      Module::Build::Platform::cygwin 0.4210
+      Module::Build::Platform::darwin 0.4210
+      Module::Build::Platform::os2 0.4210
+      Module::Build::PodParser 0.4210
+      inc::latest 0.4210
+      inc::latest::private 0.4210
+    requirements:
+      CPAN::Meta 2.142060
+      CPAN::Meta::YAML 0.003
+      Cwd 0
+      Data::Dumper 0
+      ExtUtils::CBuilder 0.27
+      ExtUtils::Install 0
+      ExtUtils::Manifest 0
+      ExtUtils::Mkbootstrap 0
+      ExtUtils::ParseXS 2.21
+      File::Basename 0
+      File::Compare 0
+      File::Copy 0
+      File::Find 0
+      File::Path 0
+      File::Spec 0.82
+      File::Temp 0.15
+      Getopt::Long 0
+      Module::Metadata 1.000002
+      Parse::CPAN::Meta 1.4401
+      Perl::OSType 1
+      Pod::Man 2.17
+      Test::Harness 3.16
+      Test::More 0.49
+      Text::Abbrev 0
+      Text::ParseWords 0
+      perl 5.008000
+      version 0.87
   Module-Build-Tiny-0.039
     pathname: L/LE/LEONT/Module-Build-Tiny-0.039.tar.gz
     provides:
@@ -348,6 +501,19 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Module-CPANfile-1.1000
+    pathname: M/MI/MIYAGAWA/Module-CPANfile-1.1000.tar.gz
+    provides:
+      Module::CPANfile 1.1000
+      Module::CPANfile::Environment undef
+      Module::CPANfile::Prereq undef
+      Module::CPANfile::Prereqs undef
+      Module::CPANfile::Requirement undef
+    requirements:
+      CPAN::Meta 2.12091
+      CPAN::Meta::Prereqs 2.12091
+      ExtUtils::MakeMaker 0
+      parent 0
   Module-Implementation-0.09
     pathname: D/DR/DROLSKY/Module-Implementation-0.09.tar.gz
     provides:
@@ -359,6 +525,61 @@ DISTRIBUTIONS
       Try::Tiny 0
       strict 0
       warnings 0
+  Module-Install-1.14
+    pathname: B/BI/BINGOS/Module-Install-1.14.tar.gz
+    provides:
+      Module::AutoInstall 1.14
+      Module::Install 1.14
+      Module::Install::Admin 1.14
+      Module::Install::Admin::Bundle 1.14
+      Module::Install::Admin::Compiler 1.14
+      Module::Install::Admin::Find 1.14
+      Module::Install::Admin::Include 1.14
+      Module::Install::Admin::Makefile 1.14
+      Module::Install::Admin::Manifest 1.14
+      Module::Install::Admin::Metadata 1.14
+      Module::Install::Admin::ScanDeps 1.14
+      Module::Install::Admin::WriteAll 1.14
+      Module::Install::AutoInstall 1.14
+      Module::Install::Base 1.14
+      Module::Install::Base::FakeAdmin 1.14
+      Module::Install::Bundle 1.14
+      Module::Install::Can 1.14
+      Module::Install::Compiler 1.14
+      Module::Install::DSL 1.14
+      Module::Install::Deprecated 1.14
+      Module::Install::External 1.14
+      Module::Install::Fetch 1.14
+      Module::Install::Include 1.14
+      Module::Install::Inline 1.14
+      Module::Install::MakeMaker 1.14
+      Module::Install::Makefile 1.14
+      Module::Install::Metadata 1.14
+      Module::Install::PAR 1.14
+      Module::Install::Run 1.14
+      Module::Install::Scripts 1.14
+      Module::Install::Share 1.14
+      Module::Install::Win32 1.14
+      Module::Install::With 1.14
+      Module::Install::WriteAll 1.14
+      inc::Module::Install 1.14
+      inc::Module::Install::DSL 1.14
+    requirements:
+      Devel::PPPort 3.16
+      ExtUtils::Install 1.52
+      ExtUtils::MakeMaker 6.59
+      ExtUtils::ParseXS 2.19
+      File::Path 0
+      File::Remove 1.42
+      File::Spec 3.28
+      Module::Build 0.29
+      Module::CoreList 2.17
+      Module::ScanDeps 1.09
+      Parse::CPAN::Meta 1.4413
+      Test::Harness 3.13
+      Test::More 0.86
+      YAML::Tiny 1.38
+      perl 5.006
   Module-Runtime-0.014
     pathname: Z/ZE/ZEFRAM/Module-Runtime-0.014.tar.gz
     provides:
@@ -381,6 +602,21 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Module-ScanDeps-1.17
+    pathname: R/RS/RSCHUPP/Module-ScanDeps-1.17.tar.gz
+    provides:
+      Module::ScanDeps 1.17
+    requirements:
+      ExtUtils::MakeMaker 6.59
+      File::Spec 0
+      File::Temp 0
+      Getopt::Long 0
+      Module::Metadata 0
+      Test::More 0
+      Test::Requires 0
+      Text::ParseWords 0
+      perl 5.008001
+      version 0
   Mojolicious-5.62
     pathname: S/SR/SRI/Mojolicious-5.62.tar.gz
     provides:
@@ -455,7 +691,7 @@ DISTRIBUTIONS
       Mojolicious::Command::generate::app undef
       Mojolicious::Command::generate::lite_app undef
       Mojolicious::Command::generate::makefile undef
-      Mojolicious::Command::generate::plugin 0.01
+      Mojolicious::Command::generate::plugin undef
       Mojolicious::Command::get undef
       Mojolicious::Command::inflate undef
       Mojolicious::Command::prefork undef
@@ -502,8 +738,6 @@ DISTRIBUTIONS
       Class::MOP 2.1402
       Class::MOP::Attribute 2.1402
       Class::MOP::Class 2.1402
-      Class::MOP::Class::Immutable::Trait undef
-      Class::MOP::Deprecated undef
       Class::MOP::Instance 2.1402
       Class::MOP::Method 2.1402
       Class::MOP::Method::Accessor 2.1402
@@ -512,18 +746,11 @@ DISTRIBUTIONS
       Class::MOP::Method::Inlined 2.1402
       Class::MOP::Method::Meta 2.1402
       Class::MOP::Method::Wrapped 2.1402
-      Class::MOP::MiniTrait undef
-      Class::MOP::Mixin undef
-      Class::MOP::Mixin::AttributeCore undef
-      Class::MOP::Mixin::HasAttributes undef
-      Class::MOP::Mixin::HasMethods undef
-      Class::MOP::Mixin::HasOverloads undef
       Class::MOP::Module 2.1402
       Class::MOP::Object 2.1402
       Class::MOP::Overload 2.1402
       Class::MOP::Package 2.1402
       Moose 2.1402
-      Moose::Deprecated undef
       Moose::Exception 2.1402
       Moose::Exception::AccessorMustReadWrite 2.1402
       Moose::Exception::AddParameterizableTypeTakesParameterizableType 2.1402
@@ -755,8 +982,8 @@ DISTRIBUTIONS
       Moose::Exception::WrongTypeConstraintGiven 2.1402
       Moose::Exporter 2.1402
       Moose::Meta::Attribute 2.1402
+      Moose::Meta::Attribute::Custom::Moose 2.1402
       Moose::Meta::Attribute::Native 2.1402
-      Moose::Meta::Attribute::Native::Trait undef
       Moose::Meta::Attribute::Native::Trait::Array 2.1402
       Moose::Meta::Attribute::Native::Trait::Bool 2.1402
       Moose::Meta::Attribute::Native::Trait::Code 2.1402
@@ -765,94 +992,15 @@ DISTRIBUTIONS
       Moose::Meta::Attribute::Native::Trait::Number 2.1402
       Moose::Meta::Attribute::Native::Trait::String 2.1402
       Moose::Meta::Class 2.1402
-      Moose::Meta::Class::Immutable::Trait undef
       Moose::Meta::Instance 2.1402
       Moose::Meta::Method 2.1402
       Moose::Meta::Method::Accessor 2.1402
-      Moose::Meta::Method::Accessor::Native undef
-      Moose::Meta::Method::Accessor::Native::Array undef
-      Moose::Meta::Method::Accessor::Native::Array::Writer undef
-      Moose::Meta::Method::Accessor::Native::Array::accessor undef
-      Moose::Meta::Method::Accessor::Native::Array::clear undef
-      Moose::Meta::Method::Accessor::Native::Array::count undef
-      Moose::Meta::Method::Accessor::Native::Array::delete undef
-      Moose::Meta::Method::Accessor::Native::Array::elements undef
-      Moose::Meta::Method::Accessor::Native::Array::first undef
-      Moose::Meta::Method::Accessor::Native::Array::first_index undef
-      Moose::Meta::Method::Accessor::Native::Array::get undef
-      Moose::Meta::Method::Accessor::Native::Array::grep undef
-      Moose::Meta::Method::Accessor::Native::Array::insert undef
-      Moose::Meta::Method::Accessor::Native::Array::is_empty undef
-      Moose::Meta::Method::Accessor::Native::Array::join undef
-      Moose::Meta::Method::Accessor::Native::Array::map undef
-      Moose::Meta::Method::Accessor::Native::Array::natatime undef
-      Moose::Meta::Method::Accessor::Native::Array::pop undef
-      Moose::Meta::Method::Accessor::Native::Array::push undef
-      Moose::Meta::Method::Accessor::Native::Array::reduce undef
-      Moose::Meta::Method::Accessor::Native::Array::set undef
-      Moose::Meta::Method::Accessor::Native::Array::shallow_clone undef
-      Moose::Meta::Method::Accessor::Native::Array::shift undef
-      Moose::Meta::Method::Accessor::Native::Array::shuffle undef
-      Moose::Meta::Method::Accessor::Native::Array::sort undef
-      Moose::Meta::Method::Accessor::Native::Array::sort_in_place undef
-      Moose::Meta::Method::Accessor::Native::Array::splice undef
-      Moose::Meta::Method::Accessor::Native::Array::uniq undef
-      Moose::Meta::Method::Accessor::Native::Array::unshift undef
-      Moose::Meta::Method::Accessor::Native::Bool::not undef
-      Moose::Meta::Method::Accessor::Native::Bool::set undef
-      Moose::Meta::Method::Accessor::Native::Bool::toggle undef
-      Moose::Meta::Method::Accessor::Native::Bool::unset undef
-      Moose::Meta::Method::Accessor::Native::Code::execute undef
-      Moose::Meta::Method::Accessor::Native::Code::execute_method undef
-      Moose::Meta::Method::Accessor::Native::Collection undef
-      Moose::Meta::Method::Accessor::Native::Counter::Writer undef
-      Moose::Meta::Method::Accessor::Native::Counter::dec undef
-      Moose::Meta::Method::Accessor::Native::Counter::inc undef
-      Moose::Meta::Method::Accessor::Native::Counter::reset undef
-      Moose::Meta::Method::Accessor::Native::Counter::set undef
-      Moose::Meta::Method::Accessor::Native::Hash undef
-      Moose::Meta::Method::Accessor::Native::Hash::Writer undef
-      Moose::Meta::Method::Accessor::Native::Hash::accessor undef
-      Moose::Meta::Method::Accessor::Native::Hash::clear undef
-      Moose::Meta::Method::Accessor::Native::Hash::count undef
-      Moose::Meta::Method::Accessor::Native::Hash::defined undef
-      Moose::Meta::Method::Accessor::Native::Hash::delete undef
-      Moose::Meta::Method::Accessor::Native::Hash::elements undef
-      Moose::Meta::Method::Accessor::Native::Hash::exists undef
-      Moose::Meta::Method::Accessor::Native::Hash::get undef
-      Moose::Meta::Method::Accessor::Native::Hash::is_empty undef
-      Moose::Meta::Method::Accessor::Native::Hash::keys undef
-      Moose::Meta::Method::Accessor::Native::Hash::kv undef
-      Moose::Meta::Method::Accessor::Native::Hash::set undef
-      Moose::Meta::Method::Accessor::Native::Hash::shallow_clone undef
-      Moose::Meta::Method::Accessor::Native::Hash::values undef
-      Moose::Meta::Method::Accessor::Native::Number::abs undef
-      Moose::Meta::Method::Accessor::Native::Number::add undef
-      Moose::Meta::Method::Accessor::Native::Number::div undef
-      Moose::Meta::Method::Accessor::Native::Number::mod undef
-      Moose::Meta::Method::Accessor::Native::Number::mul undef
-      Moose::Meta::Method::Accessor::Native::Number::set undef
-      Moose::Meta::Method::Accessor::Native::Number::sub undef
-      Moose::Meta::Method::Accessor::Native::Reader undef
-      Moose::Meta::Method::Accessor::Native::String::append undef
-      Moose::Meta::Method::Accessor::Native::String::chomp undef
-      Moose::Meta::Method::Accessor::Native::String::chop undef
-      Moose::Meta::Method::Accessor::Native::String::clear undef
-      Moose::Meta::Method::Accessor::Native::String::inc undef
-      Moose::Meta::Method::Accessor::Native::String::length undef
-      Moose::Meta::Method::Accessor::Native::String::match undef
-      Moose::Meta::Method::Accessor::Native::String::prepend undef
-      Moose::Meta::Method::Accessor::Native::String::replace undef
-      Moose::Meta::Method::Accessor::Native::String::substr undef
-      Moose::Meta::Method::Accessor::Native::Writer undef
       Moose::Meta::Method::Augmented 2.1402
       Moose::Meta::Method::Constructor 2.1402
       Moose::Meta::Method::Delegation 2.1402
       Moose::Meta::Method::Destructor 2.1402
       Moose::Meta::Method::Meta 2.1402
       Moose::Meta::Method::Overridden 2.1402
-      Moose::Meta::Mixin::AttributeCore undef
-      Moose::Meta::Object::Trait undef
       Moose::Meta::Role 2.1402
       Moose::Meta::Role::Application 2.1402
       Moose::Meta::Role::Application::RoleSummation 2.1402
@@ -880,7 +1028,6 @@ DISTRIBUTIONS
       Moose::Util 2.1402
       Moose::Util::MetaRole 2.1402
       Moose::Util::TypeConstraints 2.1402
-      Moose::Util::TypeConstraints::Builtins undef
       Test::Moose 2.1402
       metaclass 2.1402
       oose 2.1402
@@ -914,6 +1061,23 @@ DISTRIBUTIONS
       parent 0.223
       strict 1.03
       warnings 1.03
+  MooseX-Clone-0.05
+    pathname: N/NU/NUFFIN/MooseX-Clone-0.05.tar.gz
+    provides:
+      MooseX::Clone 0.05
+      MooseX::Clone::Meta::Attribute::Trait::Clone undef
+      MooseX::Clone::Meta::Attribute::Trait::Clone::Base undef
+      MooseX::Clone::Meta::Attribute::Trait::Clone::Std undef
+      MooseX::Clone::Meta::Attribute::Trait::Copy undef
+      MooseX::Clone::Meta::Attribute::Trait::NoClone undef
+      MooseX::Clone::Meta::Attribute::Trait::StrableClone undef
+    requirements:
+      Data::Visitor 0.24
+      ExtUtils::MakeMaker 0
+      Hash::Util::FieldHash::Compat 0
+      Moose 0.74
+      Test::use::ok 0
+      namespace::clean 0.08
   Package-DeprecationManager-0.13
     pathname: D/DR/DROLSKY/Package-DeprecationManager-0.13.tar.gz
     provides:
@@ -953,7 +1117,6 @@ DISTRIBUTIONS
   Package-Stash-XS-0.28
     pathname: D/DO/DOY/Package-Stash-XS-0.28.tar.gz
     provides:
-      CompileTime undef
       Package::Stash::XS 0.28
     requirements:
       ExtUtils::MakeMaker 6.30
@@ -971,28 +1134,11 @@ DISTRIBUTIONS
       Scalar::Util 1.18
       Test::More 0.42
       perl 5.00503
-  Scalar-List-Utils-1.41
-    pathname: P/PE/PEVANS/Scalar-List-Utils-1.41.tar.gz
-    provides:
-      List::Util 1.41
-      List::Util::XS 1.41
-      Scalar::Util 1.41
-      Sub::Util 1.41
-    requirements:
-      ExtUtils::MakeMaker 0
-      Test::More 0
   Sub-Exporter-0.987
     pathname: R/RJ/RJBS/Sub-Exporter-0.987.tar.gz
     provides:
       Sub::Exporter 0.987
       Sub::Exporter::Util 0.987
-      Test::SubExporter::DashSetup undef
-      Test::SubExporter::Faux undef
-      Test::SubExporter::GroupGen undef
-      Test::SubExporter::GroupGenSubclass undef
-      Test::SubExporter::ObjGen undef
-      Test::SubExporter::ObjGen::Obj undef
-      Test::SubExporter::s_e undef
     requirements:
       Carp 0
       Data::OptList 0.100
@@ -1072,60 +1218,6 @@ DISTRIBUTIONS
       Try::Tiny 0.07
       strict 0
       warnings 0
-  Test-Harness-3.34
-    pathname: L/LE/LEONT/Test-Harness-3.34.tar.gz
-    provides:
-      App::Prove 3.34
-      App::Prove::State 3.34
-      App::Prove::State::Result 3.34
-      App::Prove::State::Result::Test 3.34
-      Harness::Hook undef
-      TAP::Base 3.34
-      TAP::Formatter::Base 3.34
-      TAP::Formatter::Color 3.34
-      TAP::Formatter::Console 3.34
-      TAP::Formatter::Console::ParallelSession 3.34
-      TAP::Formatter::Console::Session 3.34
-      TAP::Formatter::File 3.34
-      TAP::Formatter::File::Session 3.34
-      TAP::Formatter::Session 3.34
-      TAP::Harness 3.34
-      TAP::Harness::Env 3.34
-      TAP::Object 3.34
-      TAP::Parser 3.34
-      TAP::Parser::Aggregator 3.34
-      TAP::Parser::Grammar 3.34
-      TAP::Parser::Iterator 3.34
-      TAP::Parser::Iterator::Array 3.34
-      TAP::Parser::Iterator::Process 3.34
-      TAP::Parser::Iterator::Stream 3.34
-      TAP::Parser::IteratorFactory 3.34
-      TAP::Parser::Multiplexer 3.34
-      TAP::Parser::Result 3.34
-      TAP::Parser::Result::Bailout 3.34
-      TAP::Parser::Result::Comment 3.34
-      TAP::Parser::Result::Plan 3.34
-      TAP::Parser::Result::Pragma 3.34
-      TAP::Parser::Result::Test 3.34
-      TAP::Parser::Result::Unknown 3.34
-      TAP::Parser::Result::Version 3.34
-      TAP::Parser::Result::YAML 3.34
-      TAP::Parser::ResultFactory 3.34
-      TAP::Parser::Scheduler 3.34
-      TAP::Parser::Scheduler::Job 3.34
-      TAP::Parser::Scheduler::Spinner 3.34
-      TAP::Parser::Source 3.34
-      TAP::Parser::SourceHandler 3.34
-      TAP::Parser::SourceHandler::Executable 3.34
-      TAP::Parser::SourceHandler::File 3.34
-      TAP::Parser::SourceHandler::Handle 3.34
-      TAP::Parser::SourceHandler::Perl 3.34
-      TAP::Parser::SourceHandler::RawTAP 3.34
-      TAP::Parser::YAMLish::Reader 3.34
-      TAP::Parser::YAMLish::Writer 3.34
-      Test::Harness 3.34
-    requirements:
-      ExtUtils::MakeMaker 0
   Test-Requires-0.08
     pathname: T/TO/TOKUHIROM/Test-Requires-0.08.tar.gz
     provides:
@@ -1135,6 +1227,28 @@ DISTRIBUTIONS
       Test::Builder::Module 0
       Test::More 0.61
       perl 5.008_001
+  Test-Simple-1.001014
+    pathname: E/EX/EXODIST/Test-Simple-1.001014.tar.gz
+    provides:
+      Test::Builder 1.001014
+      Test::Builder::IO::Scalar 2.113
+      Test::Builder::Module 1.001014
+      Test::Builder::Tester 1.28
+      Test::Builder::Tester::Color 1.290001
+      Test::Builder::Tester::Tie 1.28
+      Test::More 1.001014
+      Test::Simple 1.001014
+      Test::Tester 0.114
+      Test::Tester::Capture undef
+      Test::Tester::CaptureRunner undef
+      Test::Tester::Delegate undef
+      Test::use::ok 0.16
+      ok 0.16
+    requirements:
+      ExtUtils::MakeMaker 0
+      Scalar::Util 1.13
+      Test::Harness 2.03
+      perl 5.006
   Test-Warn-0.30
     pathname: C/CH/CHORNY/Test-Warn-0.30.tar.gz
     provides:
@@ -1149,13 +1263,20 @@ DISTRIBUTIONS
       Test::Builder::Tester 1.02
       Test::More 0
       perl 5.006
+  Tie-ToObject-0.03
+    pathname: N/NU/NUFFIN/Tie-ToObject-0.03.tar.gz
+    provides:
+      Tie::ToObject 0.03
+    requirements:
+      ExtUtils::MakeMaker 0
+      Scalar::Util 0
+      Test::More 0
+      Test::use::ok 0
+      Tie::RefHash 0
   Try-0.03
     pathname: D/DO/DOY/Try-0.03.tar.gz
     provides:
-      Error1 undef
-      Error2 undef
       Try 0.03
-      inc::MakeMaker undef
     requirements:
       Devel::CallParser 0
       Exporter 0
@@ -1192,6 +1313,21 @@ DISTRIBUTIONS
       XSLoader 0
       base 0
       perl 5.008
+  YAML-Tiny-1.64
+    pathname: E/ET/ETHER/YAML-Tiny-1.64.tar.gz
+    provides:
+      YAML::Tiny 1.64
+    requirements:
+      B 0
+      Carp 0
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      Fcntl 0
+      Module::Build::Tiny 0.038
+      Scalar::Util 0
+      perl 5.008001
+      strict 0
+      warnings 0
   namespace-clean-0.25
     pathname: R/RI/RIBASUSHI/namespace-clean-0.25.tar.gz
     provides:
