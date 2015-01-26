@@ -43,13 +43,12 @@ sub update{
     $model->set($property_name, $values->{$property_name});
   }
 
-  # warn 'model update serialize_storage'.Data::Dumper->Dumper($model->serialize_storage);
-
   my $_id;
   try{ $_id = bson_oid $model->id };
+  $_id ||= $model->id;
 
   if ($callback){
-    return $callback->('Invalid object id: "'.$model->id.'"') unless $_id;
+    return $callback->('Object id required') unless $_id;
 
     $self->collection->find_and_modify({
       query => { _id => $_id },
@@ -63,18 +62,22 @@ sub update{
       return $callback->($err) if $err;
 
       $model->record($doc);
+      $model->inflate;
 
       $callback->($err, $model);
     });
   } else {
-    die 'Invalid object id: "'.$model->id.'"' unless $_id;
+    die 'Object id required' unless $_id;
 
-    return $self->collection->find_and_modify({
+    my $doc = $self->collection->find_and_modify({
       query => { _id => $_id },
       update => { '$set' => $model->serialize_storage }, # atomic update
       new => bson_true, # return the modified doc
       # upsert => bson_true, # create doc if none found
     });
+    $model->record($doc);
+    $model->inflate;
+    return $model;
   }
 
 }
@@ -96,6 +99,7 @@ sub save{
   foreach my $property_name (keys %$values){
     $model->set($property_name, $values->{$property_name});
   }
+  $model->inflate;
 
   unless ($callback){
     my $oid = $self->collection->save($model->serialize_storage);
@@ -123,12 +127,16 @@ sub fetch{
   if ($callback){
     $self->collection->find_one( $id, sub{
       my ($coll, $err, $doc) = @_;
-      $model->record($doc) if $doc;
-      $callback->($err, $doc ? $model : undef);
+      $callback->($err) unless $doc;
+      $model->record($doc);
+      $model->inflate;
+      $callback->($err, $model);
     });
   } else {
     my $doc = $self->collection->find_one($id);
-    $model->record($doc) if $doc;
+    return unless $doc;
+    $model->record($doc);
+    $model->inflate;
     return $model;
   }
 }
