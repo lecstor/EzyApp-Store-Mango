@@ -1,5 +1,6 @@
 package EzyApp::Store::Mango::ModelBase;
 use Moose;
+
 use Mango::BSON ':bson';
 
 use Clone;
@@ -11,7 +12,7 @@ Base for models using L<EzyApp::Store::Mango>
 =cut
 
 has record => (
-  is => 'rw', isa => 'HashRef',
+  is => 'rw', isa => 'Maybe[HashRef]',
   default => sub {{}},
   trigger => \&clear_view_attributes,
 );
@@ -86,6 +87,13 @@ sub BUILDARGS{
     }
   }
 }
+
+sub BUILD{
+  my ($self) = @_;
+  $self->inflate;
+}
+
+sub inflate{}
 
 =item id
 
@@ -183,7 +191,7 @@ By default this method returns a copy of the model document.
 =cut
 
 sub serialize_storage{
-  return {%{shift->record}};
+  Clone::clone(shift->record);
 }
 
 =item update
@@ -270,7 +278,6 @@ sub remove{
 sub clone{
   my $self = shift;
   my $record = Clone::clone($self->record);
-  delete $record->{_id};
   my $class = ref $self;
   $class->new( record => $record, store => $self->store );
 }
