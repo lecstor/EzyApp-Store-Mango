@@ -120,30 +120,16 @@ $model->save(sub{
                 $model->id($id);
                 is $model->id, $id, 'set id';
 
-                my $model_dodgy = EzyApp::Store::Mango::Model->new(
+                my $model_noexist = EzyApp::Store::Mango::Model->new(
                     store => $adap,
-                    record => { _id => 'nah!' }
+                    record => { _id => bson_oid() }
                 );
-                $model_dodgy->fetch(sub{
+                $model_noexist->update(sub{
                     my ($err, $model_what) = @_;
                     ok !$model_what, 'no model';
-
-                    $model_dodgy->update(sub{
-                        my ($err, $model_what) = @_;
-                        is $err, 'Invalid object id: "nah!"', 'Invalid object';
-
-                        $model_dodgy = EzyApp::Store::Mango::Model->new(
-                            store => $adap,
-                            record => { _id => bson_oid() }
-                        );
-                        $model_dodgy->update(sub{
-                            my ($err, $model_what) = @_;
-                            ok !$model_what, 'no model';
-                            is $err->{id}, 'not-found', 'err id: not-found';
-                            is $err->{model}->id,  $model_dodgy->id, 'err inc model';
-                            Mojo::IOLoop->stop;
-                        });
-                    });
+                    is $err->{id}, 'not-found', 'err id: not-found';
+                    is $err->{model}->id,  $model_noexist->id, 'err inc model';
+                    Mojo::IOLoop->stop;
                 });
             });
         });
