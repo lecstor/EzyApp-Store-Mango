@@ -39,6 +39,20 @@ sub create{
 }
 
 
+sub count{
+  my $callback = pop if ref $_[-1] eq 'CODE';
+  my ($self) = @_;
+  if ($callback){
+    $self->collection->find->count(sub{
+      my ($coll, $err, $count) = @_;
+      $callback->($err, $count);
+    });
+  } else {
+    return $self->collection->find->count;
+  }
+}
+
+
 sub get{
   my $callback = pop if ref $_[-1] eq 'CODE';
   my ($self, $id) = @_;
@@ -55,34 +69,53 @@ sub get{
   }
 }
 
+=item find
+
+  my $results = $coll->find_cursor($criteria, $projection, $sort, $batch_size);
+
+sets batch size to 1,000. MongoDB cursors time out after 10mins and
+each batch gets a new cursor.
+
+=cut
+
 sub find{
   my $callback = pop if ref $_[-1] eq 'CODE';
-  my ($self, $criteria, $projection, $sort) = @_;
+  my ($self, $criteria, $projection, $sort, $batch_size) = @_;
   if ($callback){
     my $cursor = $self->collection->find( $criteria, $projection );
     $cursor = $cursor->sort($sort) if $sort;
+    $cursor = $cursor->batch_size($batch_size || 1000);
     $cursor->all(sub{
-      my ($ursor, $err, $docs) = @_;
+      my ($cursor, $err, $docs) = @_;
       $docs = [map { $self->create($_) } @$docs];
       $callback->($err, $docs);
     });
   } else {
     my $cursor = $self->collection->find( $criteria, $projection );
     $cursor = $cursor->sort($sort) if $sort;
+    $cursor = $cursor->batch_size($batch_size || 1000);
     [map { $self->create($_) } @{$cursor->all}];
   }
 }
 
-# sub update{
-#     my ($self, $id, $update, $callback) = @_;
-#     $self->collection->find_and_modify({
-#       query => { _id => $id },
-#       update => { '$set' => $update }
-#     }, sub{
-#         shift @_;
-#         $callback->(@_);
-#     });
-# }
+=item find_cursor
+
+  my $cursor = $coll->find_cursor($criteria, $projection, $sort, $batch_size);
+
+sets batch size to 1,000. MongoDB cursors time out after 10mins and
+each batch gets a new cursor.
+
+http://docs.mongodb.org/manual/core/cursors/
+
+=cut
+
+sub find_cursor{
+  my ($self, $criteria, $projection, $sort, $batch_size) = @_;
+  my $cursor = $self->collection->find( $criteria, $projection );
+  $cursor = $cursor->sort($sort) if $sort;
+  $cursor = $cursor->batch_size($batch_size || 1000);
+  return $cursor;
+}
 
 =item get_min_id
 
@@ -140,33 +173,39 @@ sub _get_id{
   }
 }
 
-# sub _get_id{
-#   my ($self, $site_id, $op, $callback) = @_;
-#   if ($callback){
-#     $self->collection->aggregate(
-#       [
-#           { '$match' => { 'site_id' => $site_id } },
-#           { '$group' => { _id => 0, id => { $op => '$id' } } }
-#       ],
-#       sub {
-#         my ($collection, $err, $cursor) = @_;
-#         my $result = $cursor->next if $cursor;
-#         $callback->($err, $result ? $result->{id} : undef);
-#       }
-#     );
-#   } else {
-#     my $results = $self->collection->aggregate(
-#         [
-#             { '$match' => { 'site_id' => $site_id } },
-#             { '$group' => { _id => 0, id => { $op => '$id' } } }
-#         ]
-#     );
-#     #print Dumper($result);
-#     my $result = $results->next if $results;
-#     return $result->{id} if $result;
-#     return
-#   }
-# }
+sub get_latest{
+  my ($self, $site, $callback) = @_;
+  return $self->get_sorted($site, { _id => -1 }, $callback)
+}
+
+sub get_first{
+  my ($self, $site, $callback) = @_;
+  return $self->get_sorted($site, { _id => 1 }, $callback)
+}
+
+sub get_sorted{
+  my ($self, $query, $sort, $callback) = @_;
+  my $cursor = $self->collection
+    ->find(ref $query ? $query : { site => $query })
+    ->sort($sort)
+    ->limit(1);
+  if ($callback){
+    if ($cursor){
+      $cursor->next(sub{
+        my ($cursor, $err, $doc) = @_;
+        $doc = $self->create($doc) if $doc;
+        $callback->($err, $doc);
+      });
+    } else {
+      $callback->();
+    }
+  } else {
+    return unless $cursor;
+    my $doc = $cursor->next;
+    $doc = $self->create($doc) if $doc;
+  }
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
