@@ -6,9 +6,15 @@ use EzyApp::Model::User;
 use EzyApp::Model::Account;
 use EzyApp::Model::APIKey;
 
-=header EzyApp::Model
+our $VERSION = '0.01';
 
-provides methods to controllers to get the work done.
+=head1 NAME
+
+EzyApp::Model - provides methods to controllers to get the work done.
+
+=head1 AUTHOR
+
+Jason Galea <jason@ezyapp.com>
 
 =cut
 

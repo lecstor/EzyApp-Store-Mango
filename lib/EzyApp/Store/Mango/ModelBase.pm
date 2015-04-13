@@ -282,5 +282,20 @@ sub clone{
   $class->new( record => $record, store => $self->store );
 }
 
+sub to_datetime{
+  my ($self, $date) = @_;
+  return unless $date;
+  return DateTime->from_epoch(epoch => $date->to_epoch)
+    if ref $date eq 'Mango::BSON::Time';
+  return $date;
+}
+
+sub dt_to_bson_time{
+  my ($self, $dt) = @_;
+  return unless $dt;
+  warn ref($self)." dt_to_bson_time arg is not a DateTime" unless $dt->isa('DateTime');
+  bson_time($dt->epoch * 1000);
+}
+
 no Moose;
 __PACKAGE__->meta->make_immutable;

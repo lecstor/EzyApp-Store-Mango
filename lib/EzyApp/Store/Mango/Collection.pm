@@ -5,6 +5,8 @@ use Mango::BSON ':bson';
 use EzyApp::Store::Mango::Adaptor;
 use EzyApp::Store::Mango::Model;
 
+use Promises qw(deferred);
+
 =header EzyApp::Store::Mango::Collection
 
   $models = EzyApp::Store::Mango::Collection->new(
@@ -52,6 +54,18 @@ sub count{
   }
 }
 
+sub promise_get{
+  my ($self, $id) = @_;
+  my $deferred = deferred;
+  $self->get($id, sub{
+    my ($err, $doc) = @_;
+    return $deferred->reject($err) if $err;
+    $doc
+      ? $deferred->resolve($doc)
+      : $deferred->reject("doc id: $id not found")
+  });
+  return $deferred->promise;
+}
 
 sub get{
   my $callback = pop if ref $_[-1] eq 'CODE';
